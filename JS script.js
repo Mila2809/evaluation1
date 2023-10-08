@@ -1,51 +1,84 @@
-"use strict"
+"use stict"
 
-/*  Exo 1 : Le taxi
-John essaie de rentrer chez lui en taxi.
-Problème : Il a horreur d’écouter Anissa de Wejdene qui passe tout le temps à la radio.
-Dès qu’il entend cette musique, il perd 1 de santé mentale et change de taxi.
-Partons du principe qu’une musique se change à chaque feu rouge qu’il rencontre et qu’il est à 30 feux
-rouges de chez lui.
-À chaque feu rouge, afficher la musique jouée + le nombre de feux restants.
-Deux possibilités de fin :
-- Si il a passé les 30 feux rouges, il est arrivé à destination et donc affiche qu’il est bien arrivé et
-qu’il lui a fallu x changements de taxi pour y arriver
-- Sa santé mentale tombe à 0, il explose et donc affiche « explosion »
-Nous avons besoin d’un Personnage avec un prénom et une santé mentale à 10.
-Nous avons besoin d’une liste de 5 musiquesdont Anissa - Wejdene
-Nous avons besoin d’un Trajet avec une radio, 30 feux rouges et un nombre de changements
-64
-C&DI – Algorithmie JS
-IIM DIG
-*/
+// Exo 2 : Le tueur en série
+// Un tueur en série nommé Jason est en cavale. Il est caché quelque part en forêt.
+// Une équipe de choc est présente pour le neutraliser.
+// Nous avons besoin d’un tueur nommé Jason et qui possède 100 points de vie.
+// Nous avons besoin de Caractéristiques de personnages avec des noms bien clichés (nerd, sportif, blonde…),
+// une probabilité de mourir, une de mettre des dégâts et une de mourir en mettant des dégâts (ex: 0.3, 0.5, 0.2)
+// Nous avons besoin de 5 Survivants avec un nom généré aléatoirement d’un tableau de prénoms et d’une
+// caractéristique prise de celles disponibles (toujours aléatoire).
+// Tant que le tueur n’est pas mort ou que les survivants n’ont pas tué Jason :
+// Le tueur attaque un des survivants :
+// - soit le survivant meurt
+// - soit le survivant esquive et inflige 10 points de dégâts
+// - soit le survivant inflige 15 points de dégâts mais meurt
+// Les morts seront affichés à la fin
+// Un message est attendu pour chaque action (Jason a tué X, X a esquivé et a infligé X dmg, Jason est mort,
+// Les survivants ont gagné mais RIP à X, X, X…)
 
 
-let santémentale = 10;
-let nbEssais = 0;
-let nbTaxi = 0;
+//fiche personnage Jason
+//tableau = clichés
+//tableau = prénoms
+//mettre des dégâts
+//mourir
+//mourir + dégâts
+//afichés les mort
 
-let tableauMusique=["Anissa de wejden","Boy's de Lizzo","Money de Cardi B","Freak de Doja Cat","Barbie World de Niki Minaj"];
- 
-function choisirMusique(){
-  nbEssais++;
-  let Musiquechoisie = tableauMusique[Math.floor(Math.random() * 4)];// si la musique 1 (wejden)sur les 5 alors -1 de santémental + changer de taxie
-  console.log(Musiquechoisie);
-  if (Musiquechoisie == tableauMusique[0]){
-    santémentale -= 1;
-    nbTaxi += 1;
-  }// si une autre musique que 1 sur les 5 alors rien
+let TableauPrénoms=["Sarah","Mike","Courtney","Louis","Ashley"]
+let TableauCaractéristique=["Intelo","Sportif","Blonde","Nerd","Rebel"]
+let TableauSurvivantsMorts=''
+
+class Personnage {
+    // Le constructeur initialise les attributs du personnage lors de sa création
+    constructor(nom, probabiliteAttaque, probabiliteContreAttaque, degats) {
+      this.nom = nom; // Le nom du personnage
+      this.probabiliteAttaque = probabiliteAttaque; // Probabilité d'attaquer avec succès
+      this.probabiliteContreAttaque = probabiliteContreAttaque; // Probabilité de contre-attaque
+      this.degats = degats; // Les dégâts infligés par le personnage
+    }
+  
+    // Méthode pour attaquer un autre personnage
+    attaquer(cible) {
+      // Vérifie si l'attaque réussit en comparant à la probabilité d'attaque
+      if (Math.random() < this.probabiliteAttaque) {
+        // Affiche un message d'attaque réussie
+        console.log(`${this.nom} attaque ${cible.nom} et inflige ${this.degats} points de dégâts.`);
+        // Appelle la méthode encaisserDegats de la cible pour lui infliger des dégâts
+        cible.encaisserDegats(this.degats);
+      } else {
+        // Affiche un message d'échec d'attaque
+        console.log(`${this.nom} rate son attaque contre ${cible.nom}.`);
+      }
+    }
 }
-// repeter l'action 30 fois
-while (santémentale > 0 && nbEssais< 30){// si point de santémentale superieur a 0 au bous de 30 tour alors "il est bien arriver"
-  let musique = choisirMusique();
-  console.log(`Santé mental actuelle : ${santémentale}`);
-}
+  
+let survivant = new Personnage ("...", 0.5, 0.7, 0.9);
+let personnage = [new Personnage (TableauPrénoms[Math.floor(Math.random() * 4)]+TableauCaractéristique[Math.floor(Math.random() * 4)],0.5,0.7,0.9)];
+    [new Personnage (TableauPrénoms[Math.floor(Math.random() * 4)]+TableauCaractéristique[Math.floor(Math.random() * 4)],0.5,0.6,0.9)];
+    [new Personnage (TableauPrénoms[Math.floor(Math.random() * 4)]+TableauCaractéristique[Math.floor(Math.random() * 4)],0.5,0.7,0.8)];
+    [new Personnage (TableauPrénoms[Math.floor(Math.random() * 4)]+TableauCaractéristique[Math.floor(Math.random() * 4)],0.6,0.6,0.8)];
+    [new Personnage (TableauPrénoms[Math.floor(Math.random() * 4)]+TableauCaractéristique[Math.floor(Math.random() * 4)],0.6,0.8,0.7)];
+  
+  let Jason = 100;
 
-if (santémentale <= 0) {// si point de santémentale inferieur ou egale a 0 au bous de 30 tour alors "explosion"
-  console.log("explosion");
-} else {
-  console.log("Jhon est bien arriver, avec une santé mental de : " + santémentale);
-  console.log(`Jhon a pris ${nbTaxi} taxi`)
-}
+let tour = 1;
+  while (Jason.pointsDeVie > 0) {
+    console.log(`Tour ${tour}:`);
+    personnage[Math.floor(Math.random()* 4)].attaquer(Jason);
 
-console.log(`Nombre d'essais effectués : ${nbEssais}`)//juste pour verifier les 30 tours
+    if
+    console.log(personnage.probabiliteAttaque > [Math.floor(Math.random()* 4)]){
+        Jason - 10
+    }
+
+  if (personnage.probabiliteAttaque > [Math.floor(Math.random()* 4)]){
+  } else { 
+    TableauSurvivantsMorts += personnage[Math.floor(Math.random()* 4)].prenom
+  }
+
+    console.log(`${Jason.nom} : ${Jason.pointsDeVie} points de vie`);
+    tour++;
+  }
+  
