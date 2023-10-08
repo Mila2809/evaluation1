@@ -17,7 +17,6 @@
 // Un message est attendu pour chaque action (Jason a tué X, X a esquivé et a infligé X dmg, Jason est mort,
 // Les survivants ont gagné mais RIP à X, X, X…)
 
-
 //fiche personnage Jason
 //tableau = clichés
 //tableau = prénoms
@@ -31,54 +30,48 @@ let TableauCaractéristique=["Intelo","Sportif","Blonde","Nerd","Rebel"]
 let TableauSurvivantsMorts=''
 
 class Personnage {
-    // Le constructeur initialise les attributs du personnage lors de sa création
-    constructor(nom, probabiliteAttaque, probabiliteContreAttaque, degats) {
-      this.nom = nom; // Le nom du personnage
-      this.probabiliteAttaque = probabiliteAttaque; // Probabilité d'attaquer avec succès
-      this.probabiliteContreAttaque = probabiliteContreAttaque; // Probabilité de contre-attaque
-      this.degats = degats; // Les dégâts infligés par le personnage
-    }
-  
-    // Méthode pour attaquer un autre personnage
-    attaquer(cible) {
-      // Vérifie si l'attaque réussit en comparant à la probabilité d'attaque
-      if (Math.random() < this.probabiliteAttaque) {
-        // Affiche un message d'attaque réussie
-        console.log(`${this.nom} attaque ${cible.nom} et inflige ${this.degats} points de dégâts.`);
-        // Appelle la méthode encaisserDegats de la cible pour lui infliger des dégâts
-        cible.encaisserDegats(this.degats);
-      } else {
-        // Affiche un message d'échec d'attaque
-        console.log(`${this.nom} rate son attaque contre ${cible.nom}.`);
-      }
+    constructor(nom, probabiliteAttaque, probabiliteMort, probabiliteMortAttaque) {
+      this.probabiliteAttaque = probabiliteAttaque;
+      this.probabiliteContreAttaque = probabiliteMort;
+      this.degats = probabiliteMortAttaque;
+      this.nom = nom;
     }
 }
   
-let survivant = new Personnage ("...", 0.5, 0.7, 0.9);
-let personnage = [new Personnage (TableauPrénoms[Math.floor(Math.random() * 4)]+TableauCaractéristique[Math.floor(Math.random() * 4)],0.5,0.7,0.9)];
-    [new Personnage (TableauPrénoms[Math.floor(Math.random() * 4)]+TableauCaractéristique[Math.floor(Math.random() * 4)],0.5,0.6,0.9)];
-    [new Personnage (TableauPrénoms[Math.floor(Math.random() * 4)]+TableauCaractéristique[Math.floor(Math.random() * 4)],0.5,0.7,0.8)];
-    [new Personnage (TableauPrénoms[Math.floor(Math.random() * 4)]+TableauCaractéristique[Math.floor(Math.random() * 4)],0.6,0.6,0.8)];
+let survivant = new Personnage (0.5, 0.7, 0.9);
+let personnage = [new Personnage (TableauPrénoms[Math.floor(Math.random() * 4)]+TableauCaractéristique[Math.floor(Math.random() * 4)],0.6,0.7,0.9)];
+    [new Personnage (TableauPrénoms[Math.floor(Math.random() * 4)]+TableauCaractéristique[Math.floor(Math.random() * 4)],0.8,0.6,0.7)];
+    [new Personnage (TableauPrénoms[Math.floor(Math.random() * 4)]+TableauCaractéristique[Math.floor(Math.random() * 4)],0.6,0.7,0.8)];
+    [new Personnage (TableauPrénoms[Math.floor(Math.random() * 4)]+TableauCaractéristique[Math.floor(Math.random() * 4)],0.9,0.6,0.8)];
     [new Personnage (TableauPrénoms[Math.floor(Math.random() * 4)]+TableauCaractéristique[Math.floor(Math.random() * 4)],0.6,0.8,0.7)];
   
-  let Jason = 100;
-
+let Jason = 100;
+console.log(personnage[0].nom);
 let tour = 1;
-  while (Jason.pointsDeVie > 0) {
-    console.log(`Tour ${tour}:`);
-    personnage[Math.floor(Math.random()* 4)].attaquer(Jason);
+  while (Jason > 0) {
+  let indicepersonnagerandom = Math.floor(Math.random()* 4);
 
-    if
-    console.log(personnage.probabiliteAttaque > [Math.floor(Math.random()* 4)]){
-        Jason - 10
+    console.log(`Tour ${tour}:`);
+
+if (personnage.probabiliteMort > Math.random()){
+    console.log(`${personnage[indicepersonnagerandom].nom} s'est fait tué par Jason`);
+    TableauSurvivantsMorts += personnage[Math.floor(Math.random())];
+}
+else if (personnage.probabiliteMortAttaque > Math.random()){
+    Jason -= 15;
+    console.log(`${personnage[indicepersonnagerandom].nom} s'est fait tué par Jeson mais lui a mit 15 points de dégâts`);
+    TableauSurvivantsMorts += personnage[Math.floor(Math.random())];
+    }
+else {
+    Jason -= 10;
+    console.log(`${personnage[indicepersonnagerandom].nom} a esquivé Jason et lui a mit 10 points de dégâts`);
     }
 
-  if (personnage.probabiliteAttaque > [Math.floor(Math.random()* 4)]){
-  } else { 
-    TableauSurvivantsMorts += personnage[Math.floor(Math.random()* 4)].prenom
-  }
-
-    console.log(`${Jason.nom} : ${Jason.pointsDeVie} points de vie`);
+    console.log(`Jason : ${Jason} points de vie`);
     tour++;
-  }
   
+}
+
+if (Jason <= 0)
+console.log("les survivant on gagner")
+console.log(`RIP ${TableauSurvivantsMorts}`)
